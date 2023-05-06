@@ -24,8 +24,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="nis">NIS</label>
-                                <input type="text" name="nis" class="form-control @error('nis') is-invalid @enderror" id="nis" placeholder="Masukkan NIS" value="{{ old('nis') }}">
+                                <label for="nis">NIS</label><sup class="text-danger">(wajib diisi)</sup>
+                                <input type="text" name="nis" class="form-control @error('nis') is-invalid @enderror" id="nis" placeholder="Masukkan NIS" value="{{ old('nis') }}" required>
                                 @error('nis')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -35,8 +35,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="nama">Nama</label>
-                                <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama" placeholder="Masukkan Nama" value="{{ old('nama') }}">
+                                <label for="nama">Nama</label><sup class="text-danger">(wajib diisi)</sup>
+                                <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama" placeholder="Masukkan Nama" value="{{ old('nama') }}" required>
                                 @error('nama')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -46,18 +46,32 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="jenis_kelamin">Ruangan</label>
-                                <select id="jenis_kelamin" class="form-control" name="jenis_kelamin">
-                                    <option value="" hidden>--Pilih Jenis Kelamin--</option>
-                                    <option value="L" @if(old('jenis_kelamin') == 'L') selected @endif>Laki-Laki</option>
-                                    <option value="P" @if(old('jenis_kelamin') == 'P') selected @endif>Perempuan</option>
-                                </select>
+                                <label for="jenis_kelamin">Jenis Kelamin</label><sup class="text-danger">(wajib dipilih)</sup>
+                                <div class="form-check">
+                                    <label class="form-check-label text-dark">
+                                        <input type="radio" class="form-check-input" name="jenis_kelamin" id="L"
+                                            value="L" @if (old('jenis_kelamin') == 'L') checked @endif required>
+                                        Laki-Laki
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label text-dark">
+                                        <input type="radio" class="form-check-input" name="jenis_kelamin" id="P"
+                                            value="P" @if (old('jenis_kelamin') == 'P') checked @endif required>
+                                        Perempuan
+                                    </label>
+                                </div>
+                                @error('jenis_kelamin')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="angkatan">Angkatan</label>
-                                <input type="number" name="angkatan" class="form-control @error('angkatan') is-invalid @enderror" id="angkatan" placeholder="Masukkan Angkatan" value="{{ old('angkatan') }}" min="2000">
+                                <label for="angkatan">Angkatan</label><sup class="text-danger">(wajib diisi)</sup>
+                                <input type="number" name="angkatan" class="form-control @error('angkatan') is-invalid @enderror" id="angkatan" placeholder="Masukkan Angkatan" value="{{ old('angkatan') }}" min="2000" required>
                                 @error('angkatan')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -67,8 +81,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="no_hp">No.Handphone</label>
-                                <input type="number" name="no_hp" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" placeholder="Masukkan No.Handphone" value="{{ old('no_hp') }}">
+                                <label for="no_hp">Nomor Handphone</label><sup class="text-danger">(wajib diisi)</sup>
+                                <input type="number" name="no_hp" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" placeholder="Masukkan Nomor Handphone" value="{{ old('no_hp') }}" required>
                                 @error('no_hp')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -78,8 +92,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Masukkan Email" value="{{ old('email') }}">
+                                <label for="email">Email</label><sup class="text-danger">(wajib diisi)</sup>
+                                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Masukkan Email" value="{{ old('email') }}" required>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -125,12 +139,31 @@
                                     <a href="{{ route('data-siswa.edit', $item->nis) }}"
                                         class="btn btn-primary btn-sm" style="box-shadow: none;"><i class="fa fa-pencil"></i> Ubah</a>
                                     @if ($item->pemeriksaan_count < 1)
-                                    <form action="{{ route('data-siswa.destroy', $item->nis) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger btn-hapus"><i class="fa fa-trash"></i> Hapus</button>
-                                    </form>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        data-toggle="modal" data-target="#modalHapus{{ $item->id }}">
+                                        <i class="fa fa-trash "></i> Hapus
+                                    </button>
+                                    <div class="modal fade" id="modalHapus{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data {{ $item->nama }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                    <form action="{{ route('data-siswa.destroy', $item->nis) }}" method="POST"
+                                                        class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endif
                                 </td>
                             </tr>
@@ -150,29 +183,11 @@
 @endsection
 
 @push('addon-script')
-    <script src="{{ url('sweetalert2.all.min.js') }}"></script>
-
+    @if ($errors->any())
     <script>
-        $('.btn-hapus').on('click', function (e) {
-            e.preventDefault(); // prevent form submit
-            var form = event.target.form;
-            Swal.fire({
-            title: 'Hapus Data?',
-            text: "Data Akan Terhapus Permanen",
-            icon: 'warning',
-            allowOutsideClick: false,
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Hapus',
-            cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }else {
-                    //
-                }
-            });
+        $(document).ready(function() {
+            $('#modalTambah').modal('show');
         });
     </script>
+    @endif
 @endpush

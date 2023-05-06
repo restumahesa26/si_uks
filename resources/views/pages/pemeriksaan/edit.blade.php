@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="nis">Siswa</label><br>
+                                <label for="nis">Siswa</label><sup class="text-danger">(wajib dipilih)</sup><br>
                                 <select id="nis" class="nis" name="nis" required style="width: 100% !important">
                                     <option value=""></option>
                                     @foreach ($siswa as $item2)
@@ -40,7 +40,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="keluhan">Keluhan</label>
+                                <label for="keluhan">Keluhan</label><sup class="text-danger">(wajib dipilih)</sup>
                                 <textarea name="keluhan" id="keluhan" cols="30" rows="10" class="form-control" required>{{ old('keluhan', $item->keluhan) }}</textarea>
                                 @error('keluhan')
                                     <span class="invalid-feedback" role="alert">

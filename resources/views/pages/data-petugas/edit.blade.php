@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="nama">Nama</label>
+                                <label for="nama">Nama</label><sup class="text-danger">(wajib diisi)</sup>
                                 <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama" placeholder="Masukkan Nama" value="{{ old('nama', $item->nama) }}" required>
                                 @error('nama')
                                     <span class="invalid-feedback" role="alert">
@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="username">Username</label>
+                                <label for="username">Username</label><sup class="text-danger">(wajib diisi)</sup>
                                 <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="Masukkan Username" value="{{ old('username', $item->username) }}" required>
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
@@ -40,7 +40,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">Email</label><sup class="text-danger">(wajib diisi)</sup>
                                 <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Masukkan Email" value="{{ old('email', $item->email) }}" required>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -51,8 +51,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="password">password</label>
-                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Masukkan password" value="{{ old('password') }}">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Masukkan Password" value="{{ old('password') }}">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

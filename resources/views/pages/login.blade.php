@@ -58,7 +58,7 @@
                                 <div class="my-2 d-flex justify-content-between align-items-center">
                                     <div class="form-check">
                                         <label class="form-check-label text-muted">
-                                            <input type="checkbox" class="form-check-input" name="remember">
+                                            <input type="checkbox" class="form-check-input" name="remember_me">
                                             Ingat Saya
                                         </label>
                                     </div>
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 login-half-bg d-flex flex-row">
-                        <p class="text-dark font-weight-bold text-center flex-grow align-self-end" style="font-size: 16px">Copyright &copy;
+                        <p class="text-dark font-weight-bold text-center flex-grow align-self-end" style="font-size: 16px; color: #fff !important;">Copyright &copy;
                             SD Negeri 02 Bengkulu - 2023</p>
                     </div>
                 </div>

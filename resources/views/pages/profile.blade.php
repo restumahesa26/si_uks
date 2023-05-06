@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="nama">Nama</label>
+                                <label for="nama">Nama</label><sup class="text-danger">(wajib diisi)</sup>
                                 <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama" placeholder="Masukkan Nama" value="{{ old('nama', $user->nama) }}">
                                 @error('nama')
                                     <span class="invalid-feedback" role="alert">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="username">Username</label>
+                                <label for="username">Username</label><sup class="text-danger">(wajib diisi)</sup>
                                 <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="Masukkan Username" value="{{ old('username', $user->username) }}">
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">Email</label><sup class="text-danger">(wajib diisi)</sup>
                                 <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Masukkan Email" value="{{ old('email', $user->email) }}">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">

@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="nis">Siswa</label><br>
+                                <label for="nis">Siswa</label><sup class="text-danger">(wajib dipilih)</sup><br>
                                 <select id="nis" class="nis" name="nis" required style="width: 100% !important">
                                     <option value=""></option>
                                     @foreach ($siswa as $item)
@@ -46,7 +46,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="keluhan">Keluhan</label>
+                                <label for="keluhan">Keluhan</label><sup class="text-danger">(wajib diisi)</sup>
                                 <textarea name="keluhan" id="keluhan" cols="30" rows="10" class="form-control" required>{{ old('keluhan') }}</textarea>
                                 @error('keluhan')
                                     <span class="invalid-feedback" role="alert">
@@ -121,12 +121,31 @@
                                 <td>
                                     <a href="{{ route('pemeriksaan.edit', $item->id) }}"
                                         class="btn btn-primary btn-sm" style="box-shadow: none;"><i class="fa fa-pencil"></i> Ubah</a>
-                                    <form action="{{ route('pemeriksaan.destroy', $item->id) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger btn-hapus"><i class="fa fa-trash"></i> Hapus</button>
-                                    </form>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                        data-toggle="modal" data-target="#modalHapus{{ $item->id }}">
+                                        <i class="fa fa-trash "></i> Hapus
+                                    </button>
+                                    <div class="modal fade" id="modalHapus{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Hapus Pemeriksaan a/n {{ $item->siswa->nama }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                    <form action="{{ route('pemeriksaan.destroy', $item->id) }}" method="POST"
+                                                        class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             @empty
@@ -150,6 +169,14 @@
 @endpush
 
 @push('addon-script')
+    @if ($errors->any())
+    <script>
+        $(document).ready(function() {
+            $('#modalTambah').modal('show');
+        });
+    </script>
+    @endif
+
     <script src="{{ url('backend/vendors/select2/select2.min.js') }}"></script>
     <script src="{{ url('backend/js/select2.js') }}"></script>
     <script>
@@ -160,32 +187,6 @@
         $(".nis").select2({
             placeholder: "-- Pilih Siswa --",
             allowClear: true
-        });
-    </script>
-
-    <script src="{{ url('sweetalert2.all.min.js') }}"></script>
-
-    <script>
-        $('.btn-hapus').on('click', function (e) {
-            e.preventDefault(); // prevent form submit
-            var form = event.target.form;
-            Swal.fire({
-            title: 'Hapus Data?',
-            text: "Data Akan Terhapus Permanen",
-            icon: 'warning',
-            allowOutsideClick: false,
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Hapus',
-            cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }else {
-                    //
-                }
-            });
         });
     </script>
 @endpush
