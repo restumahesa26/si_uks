@@ -29,13 +29,35 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="terapi_id">Terapi</label><br>
-                                <select id="terapi_id" class="terapi_id" name="terapi_id[]" multiple style="width: 100% !important">
+                                <label for="obat_id">Obat</label><br>
+                                <select id="obat_id" class="obat_id" name="obat_id[]" multiple style="width: 100% !important">
                                     <option value=""></option>
-                                    @foreach ($terapi as $item2)
+                                    @foreach ($obat as $item2)
                                     <option value="{{ $item2->id }}" @if(in_array($item2->id, $id)) selected @endif>{{ $item2->nama }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="terapi">Terapi</label><sup class="text-danger">(wajib diisi)</sup>
+                                <input type="text" name="terapi" class="form-control @error('terapi') is-invalid @enderror" id="terapi" placeholder="Masukkan Terapi" value="{{ old('terapi', $item->terapi) }}">
+                                @error('terapi')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="tanggal">Tanggal</label>
+                                <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" placeholder="Masukkan Tanggal" value="{{ old('tanggal', $item->tanggal) }}">
+                                @error('tanggal')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -79,7 +101,7 @@
     <script src="{{ url('backend/vendors/select2/select2.min.js') }}"></script>
     <script src="{{ url('backend/js/select2.js') }}"></script>
     <script>
-        $(".terapi_id").select2({
+        $(".obat_id").select2({
             placeholder: "-- Pilih Jenis Terapi --",
             allowClear: true
         });

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Obat;
 use App\Models\Pemeriksaan;
 use App\Models\Siswa;
-use App\Models\Terapi;
-use App\Models\TerapiPemeriksaan;
+use App\Models\Obat;
+use App\Models\ObatPemeriksaan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -22,9 +22,9 @@ class PemeriksaanController extends Controller
     {
         $items = Pemeriksaan::latest()->get();
         $siswa = Siswa::all();
-        $terapi = Terapi::latest()->get();
+        $obat = Obat::latest()->get();
 
-        return view('pages.pemeriksaan.index', compact('items','siswa','terapi'));
+        return view('pages.pemeriksaan.index', compact('items','siswa','obat'));
     }
 
     /**
@@ -44,6 +44,8 @@ class PemeriksaanController extends Controller
             'nis' => 'required',
             'keluhan' => 'required|string',
             'keterangan' => 'required|string',
+            'terapi' => 'required|string',
+            'tanggal' => 'nullable|date',
         ]);
 
         if ($validator->fails()) {
@@ -56,13 +58,15 @@ class PemeriksaanController extends Controller
             'nis' => $request->nis,
             'keluhan' => $request->keluhan,
             'keterangan' => $request->keterangan,
+            'terapi' => $request->terapi,
+            'tanggal' => $request->tanggal == '' ? Carbon::now() : $request->tanggal,
         ]);
 
-        if ($request->terapi_id) {
-            foreach ($request->terapi_id as $value) {
-                TerapiPemeriksaan::create([
+        if ($request->obat_id) {
+            foreach ($request->obat_id as $value) {
+                ObatPemeriksaan::create([
                     'pemeriksaan_id' => $pemeriksaan->id,
-                    'terapi_id' => $value
+                    'obat_id' => $value
                 ]);
             }
         }
@@ -86,10 +90,10 @@ class PemeriksaanController extends Controller
     {
         $item = Pemeriksaan::findOrFail($id);
         $siswa = Siswa::all();
-        $terapi = Terapi::latest()->get();
-        $id = TerapiPemeriksaan::where('pemeriksaan_id', $id)->pluck('terapi_id')->toArray();
+        $obat = Obat::latest()->get();
+        $id = ObatPemeriksaan::where('pemeriksaan_id', $id)->pluck('obat_id')->toArray();
 
-        return view('pages.pemeriksaan.edit', compact('item','siswa','terapi','id'));
+        return view('pages.pemeriksaan.edit', compact('item','siswa','obat','id'));
     }
 
     /**
@@ -99,9 +103,11 @@ class PemeriksaanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nis' => 'required',
-            'terapi_id' => 'nullable',
+            'obat_id' => 'nullable',
             'keluhan' => 'required|string',
             'keterangan' => 'required|string',
+            'terapi' => 'required|string',
+            'tanggal' => 'nullable|date',
         ]);
 
         if ($validator->fails()) {
@@ -116,18 +122,20 @@ class PemeriksaanController extends Controller
             'nis' => $request->nis,
             'keluhan' => $request->keluhan,
             'keterangan' => $request->keterangan,
+            'terapi' => $request->terapi,
+            'tanggal' => $request->tanggal == $item->tanggal ? $item->tanggal : $request->tanggal,
         ]);
 
-        if ($request->terapi_id) {
-            TerapiPemeriksaan::where('pemeriksaan_id', $id)->delete();
-            foreach ($request->terapi_id as $value) {
-                TerapiPemeriksaan::create([
+        if ($request->obat_id) {
+            ObatPemeriksaan::where('pemeriksaan_id', $id)->delete();
+            foreach ($request->obat_id as $value) {
+                ObatPemeriksaan::create([
                     'pemeriksaan_id' => $id,
-                    'terapi_id' => $value
+                    'obat_id' => $value
                 ]);
             }
         }else {
-            TerapiPemeriksaan::where('pemeriksaan_id', $id)->delete();
+            ObatPemeriksaan::where('pemeriksaan_id', $id)->delete();
         }
 
         Alert::toast('Berhasil Mengubah Pemeriksaan', 'success')->position('top');
@@ -140,6 +148,8 @@ class PemeriksaanController extends Controller
     public function destroy(string $id)
     {
         $item = Pemeriksaan::findOrFail($id);
+
+        $delete = ObatPemeriksaan::where('pemeriksaan_id', $id)->delete();
 
         $item->delete();
 

@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Terapi;
+use App\Models\Obat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class TerapiController extends Controller
+class ObatController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $items = Terapi::withCount('pemeriksaan')->latest()->get();
+        $items = Obat::withCount('pemeriksaan')->latest()->get();
 
-        return view('pages.data-terapi.index', compact('items'));
+        return view('pages.data-obat.index', compact('items'));
     }
 
     /**
@@ -42,12 +42,12 @@ class TerapiController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        Terapi::create([
+        Obat::create([
             'nama' => $request->nama,
         ]);
 
-        Alert::toast('Berhasil Menambah Data Terapi', 'success')->position('top');
-        return redirect()->route('data-terapi.index');
+        Alert::toast('Berhasil Menambah Data Obat', 'success')->position('top');
+        return redirect()->route('data-obat.index');
     }
 
     /**
@@ -63,9 +63,9 @@ class TerapiController extends Controller
      */
     public function edit(string $id)
     {
-        $item = Terapi::findOrFail($id);
+        $item = Obat::findOrFail($id);
 
-        return view('pages.data-terapi.edit', compact('item'));
+        return view('pages.data-obat.edit', compact('item'));
     }
 
     /**
@@ -82,14 +82,14 @@ class TerapiController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $item = Terapi::findOrFail($id);
+        $item = Obat::findOrFail($id);
 
         $item->update([
             'nama' => $request->nama,
         ]);
 
-        Alert::toast('Berhasil Mengubah Data Terapi', 'success')->position('top');
-        return redirect()->route('data-terapi.index');
+        Alert::toast('Berhasil Mengubah Data Obat', 'success')->position('top');
+        return redirect()->route('data-obat.index');
     }
 
     /**
@@ -97,11 +97,11 @@ class TerapiController extends Controller
      */
     public function destroy(string $id)
     {
-        $item = Terapi::findOrFail($id);
+        $item = Obat::findOrFail($id);
 
         $item->delete();
 
-        Alert::toast('Berhasil Menghapus Data Terapi', 'success')->position('top');
-        return redirect()->route('data-terapi.index');
+        Alert::toast('Berhasil Menghapus Data Obat', 'success')->position('top');
+        return redirect()->route('data-obat.index');
     }
 }

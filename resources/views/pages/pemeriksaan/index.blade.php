@@ -35,13 +35,35 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="terapi">Terapi</label><br>
-                                <select id="terapi" class="terapi_id" name="terapi_id[]" multiple="multiple" style="width: 100% !important">
+                                <label for="obat">Obat</label><br>
+                                <select id="obat" class="obat_id" name="obat_id[]" multiple="multiple" style="width: 100% !important">
                                     <option value=""></option>
-                                    @foreach ($terapi as $item)
-                                    <option value="{{ $item->id }}" @if(old('terapi_id') == $item->id) selected @endif>{{ $item->nama }}</option>
+                                    @foreach ($obat as $item)
+                                    <option value="{{ $item->id }}" @if(old('obat_id') == $item->id) selected @endif>{{ $item->nama }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="terapi">Terapi</label><sup class="text-danger">(wajib diisi)</sup>
+                                <input type="text" name="terapi" class="form-control @error('terapi') is-invalid @enderror" id="terapi" placeholder="Masukkan Terapi" value="{{ old('terapi') }}">
+                                @error('terapi')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="tanggal">Tanggal</label>
+                                <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" placeholder="Masukkan Tanggal" value="{{ old('tanggal') }}">
+                                @error('tanggal')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -85,7 +107,7 @@
                     <i class="fa fa-plus-circle "></i> Tambah Pemeriksaan
                 </button>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered text-nowrap">
                         <thead>
                             <tr class="text-center">
                                 <th>No</th>
@@ -94,6 +116,7 @@
                                 <th>Tanggal</th>
                                 <th>Petugas</th>
                                 <th>Terapi</th>
+                                <th>Keterangan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -103,13 +126,13 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->siswa->nama }} ({{ $item->siswa->nis }})</td>
                                 <td>{{ $item->siswa->jenis_kelamin == 'L' ? 'Laki-Laki' : 'Perempuan' }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('l, d F Y') }}</td>
                                 <td>{{ $item->user->nama }}</td>
                                 <td>
-                                    @if ($item->terapi)
+                                    @if ($item->obat)
                                     <ul class="text-left" style="margin: 0">
-                                        @forelse ($item->terapi as $item2)
-                                        <li>{{ $item2->terapi->nama }}</li>
+                                        @forelse ($item->obat as $item2)
+                                        <li>{{ $item2->obat->nama }}</li>
                                         @empty
                                         <li>Tidak Ada</li>
                                         @endforelse
@@ -118,6 +141,7 @@
                                     Tidak Ada
                                     @endif
                                 </td>
+                                <td>{{ $item->keterangan }}</td>
                                 <td>
                                     <a href="{{ route('pemeriksaan.edit', $item->id) }}"
                                         class="btn btn-primary btn-sm" style="box-shadow: none;"><i class="fa fa-pencil"></i> Ubah</a>
@@ -150,7 +174,7 @@
                             </tr>
                             @empty
                             <tr class="text-center">
-                                <td colspan="6">-- Data Kosong --</td>
+                                <td colspan="8">-- Data Kosong --</td>
                             </tr>
                             @endforelse
 
@@ -180,7 +204,7 @@
     <script src="{{ url('backend/vendors/select2/select2.min.js') }}"></script>
     <script src="{{ url('backend/js/select2.js') }}"></script>
     <script>
-        $(".terapi_id").select2({
+        $(".obat_id").select2({
             placeholder: "-- Pilih Jenis Terapi --",
             allowClear: true
         });

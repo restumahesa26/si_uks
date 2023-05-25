@@ -12,7 +12,7 @@
     <div class="col-md-12 flex-column d-flex grid-margin stretch-card">
         <div class="card" style="border-radius: 20px">
             <div class="card-body">
-                <form action="{{ route('data-terapi.update', $item->id) }}" method="post">
+                <form action="{{ route('data-obat.update', $item->id) }}" method="post">
                     @csrf
                     @method('PATCH')
                     <div class="form-group">
@@ -24,7 +24,7 @@
                             </span>
                         @enderror
                     </div>
-                    <a href="{{ route('data-terapi.index') }}" class="btn btn-secondary mr-2">Kembali</a>
+                    <a href="{{ route('data-obat.index') }}" class="btn btn-secondary mr-2">Kembali</a>
                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                 </form>
             </div>

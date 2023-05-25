@@ -23,10 +23,10 @@
                 <span class="menu-title">Data Siswa</span>
             </a>
         </li>
-        <li class="nav-item @if(Route::is('data-terapi,*')) active @endif">
-            <a class="nav-link" href="{{ route('data-terapi.index') }}">
+        <li class="nav-item @if(Route::is('data-obat.*')) active @endif">
+            <a class="nav-link" href="{{ route('data-obat.index') }}">
                 <i class="fa fa-medkit menu-icon"></i>
-                <span class="menu-title">Data Terapi</span>
+                <span class="menu-title">Data Obat</span>
             </a>
         </li>
         <li class="nav-item @if(Route::is('pemeriksaan.*')) active @endif">

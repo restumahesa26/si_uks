@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreign('nis')->references('nis')->on('siswa')->onUpdate('cascade')->onDelete('cascade');
             $table->text('keluhan');
             $table->string('keterangan');
+            $table->string('terapi');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@ class Pemeriksaan extends Model
     public $table = 'pemeriksaan';
 
     public $fillable = [
-        'petugas_id', 'nis', 'keluhan', 'keterangan'
+        'petugas_id', 'nis', 'keluhan', 'keterangan', 'terapi', 'tanggal'
     ];
 
     public function user()
@@ -25,8 +25,8 @@ class Pemeriksaan extends Model
         return $this->hasOne(Siswa::class, 'nis', 'nis');
     }
 
-    public function terapi()
+    public function obat()
     {
-        return $this->hasMany(TerapiPemeriksaan::class, 'pemeriksaan_id', 'id');
+        return $this->hasMany(ObatPemeriksaan::class, 'pemeriksaan_id', 'id');
     }
 }

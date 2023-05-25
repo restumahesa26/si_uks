@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
-@section('title', 'Data Terapi')
+@section('title', 'Data Obat')
 
 @section('content')
 <div class="row mb-3">
     <div class="col-sm-12 mb-4 mb-xl-0">
-        <h4 class="font-weight-bold text-dark">Data Terapi</h4>
+        <h4 class="font-weight-bold text-dark">Data Obat</h4>
     </div>
 </div>
 <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -13,12 +13,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Terapi</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Obat</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('data-terapi.store') }}" method="post">
+            <form action="{{ route('data-obat.store') }}" method="post">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -45,7 +45,7 @@
             <div class="card-body">
                 <button type="button" class="btn btn-primary btn-rounded mb-3"
                     data-toggle="modal" data-target="#modalTambah">
-                    <i class="fa fa-plus-circle "></i> Tambah Data Terapi
+                    <i class="fa fa-plus-circle "></i> Tambah Data Obat
                 </button>
                 <div class="table-responsive">
                     <table class="table table-bordered">
@@ -62,7 +62,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama }}</td>
                                 <td>
-                                    <a href="{{ route('data-terapi.edit', $item->id) }}"
+                                    <a href="{{ route('data-obat.edit', $item->id) }}"
                                         class="btn btn-primary btn-sm" style="box-shadow: none;"><i class="fa fa-pencil"></i> Ubah</a>
                                     @if ($item->pemeriksaan_count < 1)
                                     <button type="button" class="btn btn-danger btn-sm"
@@ -80,7 +80,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                    <form action="{{ route('data-terapi.destroy', $item->id) }}" method="POST"
+                                                    <form action="{{ route('data-obat.destroy', $item->id) }}" method="POST"
                                                         class="d-inline">
                                                         @csrf
                                                         @method('DELETE')

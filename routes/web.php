@@ -7,7 +7,6 @@ use App\Http\Controllers\PemeriksaanController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\TerapiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +27,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::resource('data-siswa', SiswaController::class);
-    Route::resource('data-terapi', TerapiController::class);
+    Route::resource('data-obat', ObatController::class);
     Route::resource('pemeriksaan', PemeriksaanController::class);
     Route::resource('data-petugas', PetugasController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

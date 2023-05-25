@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TerapiPemeriksaan extends Model
+class ObatPemeriksaan extends Model
 {
     use HasFactory;
 
-    public $table = 'terapi_pemeriksaan';
+    public $table = 'obat_pemeriksaan';
 
     public $fillable = [
-        'terapi_id', 'pemeriksaan_id'
+        'obat_id', 'pemeriksaan_id'
     ];
 
-    public function terapi()
+    public function obat()
     {
-        return $this->hasOne(Terapi::class, 'id', 'terapi_id');
+        return $this->hasOne(Obat::class, 'id', 'obat_id');
     }
 
     public function pemeriksaan()

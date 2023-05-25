@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('terapi_pemeriksaan', function (Blueprint $table) {
+        Schema::create('obat', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pemeriksaan_id')->references('id')->on('pemeriksaan');
-            $table->foreignId('terapi_id')->references('id')->on('terapi');
+            $table->string('nama');
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('terapi_pemeriksaan');
+        Schema::dropIfExists('obat');
     }
 };
