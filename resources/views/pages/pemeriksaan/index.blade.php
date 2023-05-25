@@ -115,6 +115,7 @@
                                 <th>Jenis Kelamin</th>
                                 <th>Tanggal</th>
                                 <th>Petugas</th>
+                                <th>Obat</th>
                                 <th>Terapi</th>
                                 <th>Keterangan</th>
                                 <th>Aksi</th>
@@ -141,6 +142,7 @@
                                     Tidak Ada
                                     @endif
                                 </td>
+                                <td>{{ $item->terapi }}</td>
                                 <td>{{ $item->keterangan }}</td>
                                 <td>
                                     <a href="{{ route('pemeriksaan.edit', $item->id) }}"
@@ -174,7 +176,7 @@
                             </tr>
                             @empty
                             <tr class="text-center">
-                                <td colspan="8">-- Data Kosong --</td>
+                                <td colspan="9">-- Data Kosong --</td>
                             </tr>
                             @endforelse
 
