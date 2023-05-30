@@ -45,6 +45,7 @@
                     <th style="vertical-align : middle; text-align:center;">Petugas</th>
                     <th style="vertical-align : middle; text-align:center;">Keluhan</th>
                     <th style="vertical-align : middle; text-align:center;">Penanganan</th>
+                    <th style="vertical-align : middle; text-align:center;">Terapi</th>
                     <th style="vertical-align : middle; text-align:center;">Keterangan</th>
                 </tr>
             </thead>
@@ -64,10 +65,10 @@
                     <td style="vertical-align : middle; text-align:center;">{{ $item->user->nama }}</td>
                     <td style="vertical-align : middle;">{{ $item->keterangan }}</td>
                     <td style="vertical-align : middle;">
-                        @if ($item->terapi)
+                        @if ($item->obat)
                         <ul class="text-left" style="vertical-align : middle; margin: 0 !important;">
-                            @forelse ($item->terapi as $item2)
-                            <li style="vertical-align : middle;">{{ $item2->terapi->nama }}</li>
+                            @forelse ($item->obat as $item2)
+                            <li style="vertical-align : middle;">{{ $item2->obat->nama }}</li>
                             @empty
                             <li style="vertical-align : middle;">Tidak Ada</li>
                             @endforelse
@@ -76,6 +77,7 @@
                         Tidak Ada
                         @endif
                     </td>
+                    <td style="vertical-align : middle;">{{ $item->terapi }}</td>
                     <td style="vertical-align : middle;">{{ $item->keterangan }}</td>
                 </tr>
                 @empty

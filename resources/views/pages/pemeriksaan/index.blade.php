@@ -107,7 +107,7 @@
                     <i class="fa fa-plus-circle "></i> Tambah Pemeriksaan
                 </button>
                 <div class="table-responsive">
-                    <table class="table table-bordered text-nowrap">
+                    <table class="table table-bordered text-nowrap" id="table">
                         <thead>
                             <tr class="text-center">
                                 <th>No</th>
@@ -188,6 +188,24 @@
     </div>
 </div>
 @endsection
+
+@if ($items->count() > 0)
+@push('addon-style')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
+@endpush
+
+@push('addon-script')
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#table').DataTable({
+            "orderable": false
+        });
+    });
+</script>
+@endpush
+@endif
 
 @push('addon-style')
     <link rel="stylesheet" href="{{ url('backend/vendors/select2/select2.min.css') }}">

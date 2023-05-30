@@ -76,7 +76,7 @@
                     <i class="fa fa-history"></i> Riwayat 10 Pemeriksaan Terakhir
                 </p>
                 <div class="table-responsive mt-3">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered text-nowrap">
                         <thead>
                             <tr class="text-center">
                                 <th>No</th>
@@ -84,6 +84,7 @@
                                 <th>Jenis Kelamin</th>
                                 <th>Tanggal</th>
                                 <th>Petugas</th>
+                                <th>Obat</th>
                                 <th>Terapi</th>
                             </tr>
                         </thead>
@@ -96,10 +97,10 @@
                                 <td>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('l, d F Y') }}</td>
                                 <td>{{ $item->user->nama }}</td>
                                 <td>
-                                    @if ($item->terapi)
+                                    @if ($item->obat)
                                     <ul class="text-left" style="margin: 0">
-                                        @forelse ($item->terapi as $item2)
-                                        <li>{{ $item2->terapi->nama }}</li>
+                                        @forelse ($item->obat as $item2)
+                                        <li>{{ $item2->obat->nama }}</li>
                                         @empty
                                         <li>Tidak Ada</li>
                                         @endforelse
@@ -108,6 +109,7 @@
                                     Tidak Ada
                                     @endif
                                 </td>
+                                <td>{{ $item->terapi }}</td>
                             </tr>
                             @empty
                             <tr class="text-center">
