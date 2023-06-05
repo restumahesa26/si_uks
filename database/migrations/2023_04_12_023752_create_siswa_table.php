@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['L','P']);
             $table->string('angkatan');
             $table->string('no_hp');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

@@ -34,12 +34,12 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nis' => 'required|string|max:50',
+            'nis' => 'required|string|max:50|unique:siswa',
             'nama' => 'required|string|max:50',
             'jenis_kelamin' => 'required|in:L,P',
             'angkatan' => 'required|numeric',
             'no_hp' => 'required|numeric',
-            'email' => 'required|string|max:50|email',
+            'email' => 'nullable|string|max:50|email',
         ]);
 
         if ($validator->fails()) {
@@ -89,7 +89,7 @@ class SiswaController extends Controller
             'jenis_kelamin' => 'required|in:L,P',
             'angkatan' => 'required|numeric',
             'no_hp' => 'required|numeric',
-            'email' => 'required|string|max:50|email',
+            'email' => 'nullable|string|max:50|email',
         ]);
 
         if ($validator->fails()) {
@@ -98,6 +98,17 @@ class SiswaController extends Controller
         }
 
         $item = Siswa::findOrFail($id);
+
+        if ($request->nis != $item->nis) {
+            $validator2 = Validator::make($request->all(), [
+                'nis' => 'required|string|max:50|unique:siswa',
+            ]);
+
+            if ($validator2->fails()) {
+                Alert::toast('Perhatikan data yang diisi', 'error')->position('top');
+                return redirect()->back()->withErrors($validator2)->withInput();
+            }
+        }
 
         $item->update([
             'nis' => $request->nis,
